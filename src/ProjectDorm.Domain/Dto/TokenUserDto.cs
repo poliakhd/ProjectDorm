@@ -1,8 +1,8 @@
-﻿// <copyright file="BookingDto.cs" company="">
+﻿// <copyright file="LoggedUserDto.cs" company="">
 // Copyright (c) 2019 All Rights Reserved
 // </copyright>
 // <author>Daniil Poliakh</author>
-// <date>19/04/2019 10:08 PM</date>
+// <date>19/04/2019 11:33 PM</date>
 // <summary>
 // 
 // THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, 
@@ -10,28 +10,21 @@
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 // </summary>
 
-using System;
-
 namespace ProjectDorm.Domain.Dto
 {
     /// <summary>
-    /// Booking data transfer object
+    /// Token data transfer object
     /// </summary>
-    public class BookingDto
+    public class TokenUserDto
     {
         /// <summary>
-        /// Gets or sets booking room id
+        /// Gets or sets username
         /// </summary>
-        public int RoomId { get; set; }
+        public string UserName { get; set; }
 
         /// <summary>
-        /// Gets or sets booking start date
+        /// Gets or sets token
         /// </summary>
-        public DateTime StartDate { get; set; }
-
-        /// <summary>
-        /// Gets or sets booking end date
-        /// </summary>
-        public DateTime EndDate { get; set; }
+        public string Token { get; set; }
     }
 }

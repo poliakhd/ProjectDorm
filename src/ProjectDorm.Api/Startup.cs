@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using AutoMapper;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -13,6 +16,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using ProjectDorm.Api.Validation;
 using ProjectDorm.Domain.Database;
 using ProjectDorm.Domain.Database.Entities;
 using ProjectDorm.Domain.Database.Providers;
@@ -78,14 +82,21 @@ namespace ProjectDorm.Api
                         Type = "apiKey"
                     });
 
+                c.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>>
+                {
+                    {"Bearer", new string[] { }},
+                });
+
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
             });
 
-            services.AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddAutoMapper();
 
+            services.AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+                .AddFluentValidation(c => c.RegisterValidatorsFromAssemblyContaining<PagingFilterValidator>());
 
             var key = Encoding.ASCII.GetBytes(Configuration["JwtOptions:Secret"]);
 
@@ -149,6 +160,10 @@ namespace ProjectDorm.Api
 
             builder.RegisterType<BookingProvider>()
                 .As<IBookingProvider>()
+                .InstancePerLifetimeScope();
+
+            builder.RegisterType<RoomProvider>()
+                .As<IRoomProvider>()
                 .InstancePerLifetimeScope();
 
             builder.RegisterType<UserService>()

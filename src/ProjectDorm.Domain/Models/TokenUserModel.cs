@@ -1,8 +1,8 @@
-﻿// <copyright file="Gender.cs" company="">
+﻿// <copyright file="TokenUserModel.cs" company="">
 // Copyright (c) 2019 All Rights Reserved
 // </copyright>
 // <author>Daniil Poliakh</author>
-// <date>19/04/2019 10:05 PM</date>
+// <date>20/04/2019 6:54 PM</date>
 // <summary>
 // 
 // THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, 
@@ -12,9 +12,16 @@
 
 namespace ProjectDorm.Domain.Models
 {
-    public enum Gender
+    public class TokenUserModel
     {
-        Male = 0,
-        Female = 1
+        /// <summary>
+        /// Gets or sets username
+        /// </summary>
+        public string UserName { get; set; }
+
+        /// <summary>
+        /// Gets or sets token
+        /// </summary>
+        public string Token { get; set; }
     }
 }

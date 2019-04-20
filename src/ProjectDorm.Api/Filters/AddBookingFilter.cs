@@ -1,8 +1,8 @@
-﻿// <copyright file="BookingDto.cs" company="">
+﻿// <copyright file="AddBookingFilter.cs" company="">
 // Copyright (c) 2019 All Rights Reserved
 // </copyright>
 // <author>Daniil Poliakh</author>
-// <date>19/04/2019 10:08 PM</date>
+// <date>20/04/2019 7:53 PM</date>
 // <summary>
 // 
 // THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, 
@@ -11,27 +11,35 @@
 // </summary>
 
 using System;
+using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc;
 
-namespace ProjectDorm.Domain.Dto
+namespace ProjectDorm.Api.Filters
 {
     /// <summary>
-    /// Booking data transfer object
+    /// Add booking filter
     /// </summary>
-    public class BookingDto
+    public class AddBookingFilter
     {
         /// <summary>
-        /// Gets or sets booking room id
+        /// Gets or sets room id
         /// </summary>
+        [Required]
+        [FromQuery]
         public int RoomId { get; set; }
 
         /// <summary>
-        /// Gets or sets booking start date
+        /// Gets or sets start booking date
         /// </summary>
+        [Required]
+        [FromQuery]
         public DateTime StartDate { get; set; }
 
         /// <summary>
-        /// Gets or sets booking end date
+        /// Gets or sets end booking date
         /// </summary>
+        [Required]
+        [FromQuery]
         public DateTime EndDate { get; set; }
     }
 }

@@ -10,41 +10,58 @@
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 // </summary>
 
-using System.Collections.Generic;
-using System.Linq;
+using System;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+using ProjectDorm.Common.Extensions;
+using ProjectDorm.Common.Models.Paging;
 using ProjectDorm.Domain.Database.Entities;
 using ProjectDorm.Domain.Database.Providers.Interfaces;
-using ProjectDorm.Domain.Dto;
+using ProjectDorm.Domain.Database.Repositories.Interfaces;
+using ProjectDorm.Domain.Models;
 using ProjectDorm.Infrastructure.Providers.Interfaces;
 
 namespace ProjectDorm.Infrastructure.Providers
 {
+    /// <summary>
+    /// Base booking provider
+    /// </summary>
     public class BookingProvider : IBookingProvider
     {
         private readonly ILinqProvider _linqProvider;
+        private readonly IDbRepository<BookingEntity, int> _bookingRepository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BookingProvider" /> class.
         /// </summary>
-        public BookingProvider(ILinqProvider linqProvider)
+        public BookingProvider(ILinqProvider linqProvider, IDbRepository<BookingEntity, int> bookingRepository)
         {
             _linqProvider = linqProvider;
+            _bookingRepository = bookingRepository;
         }
 
         /// <inheritdoc />
-        public async Task<IEnumerable<BookingDto>> GetBookingsAsync()
+        public async Task<PagedResult<BookingEntity>> GetBookingsAsync(int page, int size)
         {
             var bookings = await _linqProvider.Query<BookingEntity>()
-                .ToListAsync();
+                .AsPagedAsync(page, size);
 
-            return bookings.Select(x => new BookingDto
-                {
-                    RoomId = x.RoomId,
-                    StartDate = x.StartDate,
-                    EndDate = x.EndDate
-                });
+            return bookings;
+        }
+
+        /// <inheritdoc />
+        public async Task<BookingEntity> AddBookingAsync(int roomId, DateTime startDate, DateTime endDate)
+        {
+            var result = await _bookingRepository.AddAsync(new BookingEntity()
+            {
+                RoomId = roomId,
+                StartDate = startDate,
+                EndDate = endDate,
+                Size = 1,
+                GenderModel = GenderModel.Male
+            });
+            await _bookingRepository.SaveAsync();
+
+            return result;
         }
     }
 }

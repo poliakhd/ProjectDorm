@@ -12,6 +12,7 @@
 
 using System.Threading.Tasks;
 using ProjectDorm.Domain.Dto;
+using ProjectDorm.Domain.Models;
 
 namespace ProjectDorm.Infrastructure.Services.Interfaces
 {
@@ -25,7 +26,7 @@ namespace ProjectDorm.Infrastructure.Services.Interfaces
         /// </summary>
         /// <param name="userName">Username</param>
         /// <param name="password">Password</param>
-        /// <returns><see cref="LoggedUserDto"/> instance</returns>
-        Task<LoggedUserDto> AuthenticateAsync(string userName, string password);
+        /// <returns><see cref="TokenUserModel"/> instance</returns>
+        Task<TokenUserModel> AuthenticateAsync(string userName, string password);
     }
 }

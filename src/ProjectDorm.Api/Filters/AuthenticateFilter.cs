@@ -10,18 +10,28 @@
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 // </summary>
 
-namespace ProjectDorm.Domain.Dto
+using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc;
+
+namespace ProjectDorm.Api.Filters
 {
-    public class LoginDto
+    /// <summary>
+    /// Authenticate filter
+    /// </summary>
+    public class AuthenticateFilter
     {
         /// <summary>
         /// Gets or sets username
         /// </summary>
+        [Required]
+        [FromQuery]
         public string UserName { get; set; }
 
         /// <summary>
         /// Gets or sets password
         /// </summary>
+        [Required]
+        [FromQuery]
         public string Password { get; set; }
     }
 }

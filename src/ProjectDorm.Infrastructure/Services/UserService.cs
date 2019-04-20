@@ -19,7 +19,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using ProjectDorm.Domain.Database.Entities;
-using ProjectDorm.Domain.Dto;
+using ProjectDorm.Domain.Models;
 using ProjectDorm.Domain.Options;
 using ProjectDorm.Infrastructure.Services.Interfaces;
 
@@ -41,7 +41,7 @@ namespace ProjectDorm.Infrastructure.Services
         }
 
         /// <inheritdoc />
-        public async Task<LoggedUserDto> AuthenticateAsync(string userName, string password)
+        public async Task<TokenUserModel> AuthenticateAsync(string userName, string password)
         {
             var user = await _userManager.FindByNameAsync(userName);
 
@@ -71,10 +71,10 @@ namespace ProjectDorm.Infrastructure.Services
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
-            return new LoggedUserDto
+            return new TokenUserModel
             {
-                Token = tokenHandler.WriteToken(token),
-                UserName = user.UserName
+                UserName = user.UserName,
+                Token = tokenHandler.WriteToken(token)
             };
         }
     }

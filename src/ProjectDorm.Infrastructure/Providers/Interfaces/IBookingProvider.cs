@@ -10,9 +10,10 @@
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 // </summary>
 
-using System.Collections.Generic;
+using System;
 using System.Threading.Tasks;
-using ProjectDorm.Domain.Dto;
+using ProjectDorm.Common.Models.Paging;
+using ProjectDorm.Domain.Database.Entities;
 
 namespace ProjectDorm.Infrastructure.Providers.Interfaces
 {
@@ -25,6 +26,15 @@ namespace ProjectDorm.Infrastructure.Providers.Interfaces
         /// Asynchronous method for getting all bookings
         /// </summary>
         /// <returns>List of booking entities</returns>
-        Task<IEnumerable<BookingDto>> GetBookingsAsync();
+        Task<PagedResult<BookingEntity>> GetBookingsAsync(int page, int size);
+
+        /// <summary>
+        /// Asynchronous method for add new booking
+        /// </summary>
+        /// <param name="roomId">Room id to book</param>
+        /// <param name="startDate">Start date of booking</param>
+        /// <param name="endDate">End date of booking</param>
+        /// <returns><see cref="BookingEntity"/> instance</returns>
+        Task<BookingEntity> AddBookingAsync(int roomId, DateTime startDate, DateTime endDate);
     }
 }

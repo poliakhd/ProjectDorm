@@ -52,29 +52,24 @@ namespace ProjectDorm.Domain.Database.Repositories
         }
 
         /// <inheritdoc />
-        public virtual TEntity Add(TEntity entity)
+        public virtual async Task<TEntity> AddAsync(TEntity entity)
         {
-            var result = _context.Set<TEntity>().Add(entity);
+            var result = await _context.Set<TEntity>().AddAsync(entity);
             return result.Entity;
         }
 
         /// <inheritdoc />
-        public virtual TEntity Update(TEntity entity)
+        public virtual Task<TEntity> UpdateAsync(TEntity entity)
         {
             var result = _context.Set<TEntity>().Update(entity);
-            return result.Entity;
+            return Task.FromResult(result.Entity);
         }
 
         /// <inheritdoc />
-        public virtual void Delete(TEntity entity)
+        public virtual Task DeleteAsync(TEntity entity)
         {
             _context.Set<TEntity>().Remove(entity);
-        }
-
-        /// <inheritdoc />
-        public virtual TEntity Get(TKey id)
-        {
-            return _context.Set<TEntity>().Find(id);
+            return Task.CompletedTask;
         }
 
         /// <inheritdoc />
@@ -84,21 +79,9 @@ namespace ProjectDorm.Domain.Database.Repositories
         }
 
         /// <inheritdoc />
-        public IQueryable<TEntity> GetAll()
-        {
-            return _context.Set<TEntity>();
-        }
-
-        /// <inheritdoc />
         public virtual async Task<ICollection<TEntity>> GetAllAsync()
         {
             return await _context.Set<TEntity>().ToListAsync();
-        }
-
-        /// <inheritdoc />
-        public virtual TEntity Find(Expression<Func<TEntity, bool>> match)
-        {
-            return _context.Set<TEntity>().SingleOrDefault(match);
         }
 
         /// <inheritdoc />
@@ -108,21 +91,9 @@ namespace ProjectDorm.Domain.Database.Repositories
         }
 
         /// <inheritdoc />
-        public ICollection<TEntity> FindAll(Expression<Func<TEntity, bool>> match)
-        {
-            return _context.Set<TEntity>().Where(match).ToList();
-        }
-
-        /// <inheritdoc />
         public async Task<ICollection<TEntity>> FindAllAsync(Expression<Func<TEntity, bool>> match)
         {
             return await _context.Set<TEntity>().Where(match).ToListAsync();
-        }
-
-        /// <inheritdoc />
-        public int Count()
-        {
-            return _context.Set<TEntity>().Count();
         }
 
         /// <inheritdoc />
@@ -132,40 +103,9 @@ namespace ProjectDorm.Domain.Database.Repositories
         }
 
         /// <inheritdoc />
-        public virtual int Save()
-        {
-            return _context.SaveChanges();
-        }
-
-        /// <inheritdoc />
         public virtual async Task<int> SaveAsync()
         {
             return await _context.SaveChangesAsync();
-        }
-
-        /// <inheritdoc />
-        public virtual IQueryable<TEntity> FindBy(Expression<Func<TEntity, bool>> predicate)
-        {
-            return _context.Set<TEntity>().Where(predicate);
-        }
-
-        /// <inheritdoc />
-        public virtual async Task<ICollection<TEntity>> FindByAsync(Expression<Func<TEntity, bool>> predicate)
-        {
-            return await _context.Set<TEntity>().Where(predicate).ToListAsync();
-        }
-
-        /// <inheritdoc />
-        public IQueryable<TEntity> GetAllIncluding(params Expression<Func<TEntity, object>>[] includeProperties)
-        {
-            var queryable = GetAll();
-
-            foreach (var includeProperty in includeProperties)
-            {
-                queryable = queryable.Include(includeProperty);
-            }
-
-            return queryable;
         }
 
         #region Implementation of IDisposable

@@ -27,6 +27,9 @@ namespace ProjectDorm.Domain.Database.Configurations
 
             builder.HasOne(x => x.Room)
                 .WithMany(x => x.Bookings);
+
+            builder.Property(x => x.GenderModel)
+                .HasColumnName("Gender");
         }
     }
 }
