@@ -1,0 +1,27 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Size</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let room of rooms.result">
+      <td>{{room.id}}</td>
+      <td>{{room.size}}</td>
+      <td>
+        <a class="btn btn-primary" [routerLink]="['/rooms', room.id, 'book']" >Book</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<nav>
+  <ul class="pagination">
+    <li class="page-item" [ngClass]="this.pagePreviousDisabled()"><span class="page-link" (click)="this.previousPage()" >Previous</span></li>
+    <li *ngFor="let pageNumber of pages" class="page-item" [ngClass]="this.pageActive(pageNumber)">
+      <span class="page-link" (click)="this.page(pageNumber)">{{pageNumber}}</span>
+    </li>
+    <li class="page-item" [ngClass]="this.pageNextDisabled()"><span class="page-link" (click)="this.nextPage()">Next</span></li>
+  </ul>
+</nav>
