@@ -40,10 +40,10 @@ namespace ProjectDorm.Infrastructure.Providers
         }
 
         /// <inheritdoc />
-        public async Task<PagedResult<RoomEntity>> GetRoomsAsync(int page, int size)
+        public async Task<PagedResult<RoomEntity>> GetRoomsAsync(PagingModel paging)
         {
             var rooms = await _linqProvider.Query<RoomEntity>()
-                .AsPagedAsync(page, size);
+                .AsPagedAsync(paging.Page, paging.Size);
 
             return rooms;
         }
@@ -86,6 +86,17 @@ namespace ProjectDorm.Infrastructure.Providers
                     });
                 }
             }
+
+            return result;
+        }
+
+        /// <inheritdoc />
+        public async Task<PagedResult<RoomEntity>> GetAvailableRooms(DateTime from, DateTime to, PagingModel paging)
+        {
+            var result = await _linqProvider.Query<RoomEntity>()
+                .Include(x => x.Bookings)
+                .Where(x => x.Bookings.All(y => !(from < y.EndDate.AddDays(1) && to > y.StartDate)))
+                .AsPagedAsync(paging.Page, paging.Size);
 
             return result;
         }

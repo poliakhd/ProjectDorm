@@ -1,3 +1,4 @@
+import { AddBookingComponent } from './components/add-booking/add-booking.component';
 import { BookRoomComponent } from './components/book-room/book-room.component';
 import { AuthGuard } from './../../services/auth-guard.service';
 import { HomeComponent } from './components/home/home.component';
@@ -26,6 +27,10 @@ const routes: Routes = [
       {
         path: 'rooms/:id/book',
         component: BookRoomComponent
+      },
+      {
+        path: 'booking/add',
+        component: AddBookingComponent
       }
     ]
   },

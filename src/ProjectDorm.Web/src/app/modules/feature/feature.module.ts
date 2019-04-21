@@ -1,3 +1,4 @@
+import { CoreModule } from './../core/core.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HomeComponent } from './components/home/home.component';
@@ -8,6 +9,7 @@ import { BookingsComponent } from './components/bookings/bookings.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { RoomsComponent } from './components/rooms/rooms.component';
 import { BookRoomComponent } from './components/book-room/book-room.component';
+import { AddBookingComponent } from './components/add-booking/add-booking.component';
 
 @NgModule({
   imports: [
@@ -15,8 +17,9 @@ import { BookRoomComponent } from './components/book-room/book-room.component';
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    BrowserModule
+    BrowserModule,
+    CoreModule
   ],
-  declarations: [HomeComponent, LoginComponent, BookingsComponent, RoomsComponent, BookRoomComponent]
+  declarations: [HomeComponent, LoginComponent, BookingsComponent, RoomsComponent, BookRoomComponent, AddBookingComponent]
 })
 export class FeatureModule { }

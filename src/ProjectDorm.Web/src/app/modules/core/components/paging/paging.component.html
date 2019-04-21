@@ -1,0 +1,9 @@
+<nav>
+  <ul class="pagination">
+    <li class="page-item" [ngClass]="this.pagePreviousDisabled()"><span class="page-link" (click)="this.previousPage()" >Previous</span></li>
+    <li *ngFor="let pageNumber of pages" class="page-item" [ngClass]="this.pageActive(pageNumber)">
+      <span class="page-link" (click)="this.openPage(pageNumber)">{{pageNumber}}</span>
+    </li>
+    <li class="page-item" [ngClass]="this.pageNextDisabled()"><span class="page-link" (click)="this.nextPage()">Next</span></li>
+  </ul>
+</nav>

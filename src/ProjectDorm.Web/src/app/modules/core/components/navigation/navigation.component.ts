@@ -1,8 +1,6 @@
 import { AuthService } from 'src/app/services';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Route } from '@angular/compiler/src/core';
-import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-navigation',

@@ -1,3 +1,5 @@
+<a class="btn btn-primary mb-2" [routerLink]="['/booking/add']">New booking</a>
+
 <table class="table">
   <thead>
     <tr>
@@ -14,12 +16,10 @@
     </tr>
   </tbody>
 </table>
-<nav>
-  <ul class="pagination">
-    <li class="page-item" [ngClass]="this.pagePreviousDisabled()"><span class="page-link" (click)="this.previousPage()" >Previous</span></li>
-    <li *ngFor="let pageNumber of pages" class="page-item" [ngClass]="this.pageActive(pageNumber)">
-      <span class="page-link" (click)="this.page(pageNumber)">{{pageNumber}}</span>
-    </li>
-    <li class="page-item" [ngClass]="this.pageNextDisabled()"><span class="page-link" (click)="this.nextPage()">Next</span></li>
-  </ul>
-</nav>
+<app-paging 
+  [pageCount]="this.bookings.pageCount"
+  [currentPage]="this.bookings.currentPage" 
+  (previous)="this.page($event)"
+  (next)="this.nextPage($event)"
+  (page)="this.page($event)">
+</app-paging>

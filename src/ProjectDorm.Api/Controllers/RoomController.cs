@@ -19,6 +19,7 @@ using ProjectDorm.Api.Filters;
 using ProjectDorm.Api.Filters.Base;
 using ProjectDorm.Common.Models.Paging;
 using ProjectDorm.Domain.Dto;
+using ProjectDorm.Domain.Models;
 using ProjectDorm.Infrastructure.Providers.Interfaces;
 
 namespace ProjectDorm.Api.Controllers
@@ -65,7 +66,12 @@ namespace ProjectDorm.Api.Controllers
         [ProducesResponseType(500)]
         public async Task<IActionResult> GetAllRooms([FromQuery]PagingFilter filter)
         {
-            var result = await _roomProvider.GetRoomsAsync(filter.Page, filter.Size);
+            var result = await _roomProvider.GetRoomsAsync(
+                new PagingModel
+                {
+                    Page = filter.Page,
+                    Size = filter.Size
+                });
 
             if (result?.Result == null || !result.Result.Any())
             {
@@ -76,7 +82,7 @@ namespace ProjectDorm.Api.Controllers
         }
 
         /// <summary>
-        /// Method for getting all available dates from room
+        /// Method for getting all available dates for room
         /// </summary>
         /// <remarks>
         /// Sample request:
@@ -97,6 +103,39 @@ namespace ProjectDorm.Api.Controllers
         {
             var result = await _roomProvider.GetAvailableRoomDates(filter.Id);
             return Ok(result);
+        }
+
+        /// <summary>
+        /// Method for getting all available rooms for specified date
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// 
+        ///     GET api/v1/room/all/available
+        /// 
+        /// </remarks>
+        /// <param name="filter">Filter model</param>
+        /// <param name="pagingFilter">Paging filter model</param>
+        /// <returns>List of available rooms</returns>
+        /// <response code="200">Returns list of available rooms</response>
+        /// <response code="400">Returns if there are validation errors</response>
+        /// <response code="500">Returns if there is system error</response>
+        [HttpGet("all/available")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> GetAvailableRooms([FromQuery]GetAvailableRoomsFilter filter, [FromQuery]PagingFilter pagingFilter)
+        {
+            var result = await _roomProvider.GetAvailableRooms(
+                filter.StartDate, 
+                filter.EndDate, 
+                new PagingModel
+                {
+                    Page = pagingFilter.Page,
+                    Size = pagingFilter.Size
+                });
+
+            return Ok(_mapper.Map<PagedResult<RoomDto>>(result));
         }
     }
 }

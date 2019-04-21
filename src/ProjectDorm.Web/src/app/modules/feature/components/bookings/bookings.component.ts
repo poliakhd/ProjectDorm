@@ -12,7 +12,6 @@ import { map } from 'rxjs/operators';
 export class BookingsComponent implements OnInit {
 
   bookings: Paged<Booking>;
-  pages: Array<number>;
 
   constructor(private apiService: ApiService) {
     this.bookings = new Paged<Booking>();
@@ -22,42 +21,19 @@ export class BookingsComponent implements OnInit {
     this.apiService.getBookings(1, 10)
       .subscribe(response => {
         this.bookings = response;
-        this.pages = Array.from({length: this.bookings.pageCount}, (v, k) => k + 1);
       });
   }
 
-  pageActive(index: number) {
-    return {
-      'active': index === this.bookings.currentPage
-    };
+  page(page: number) {
+    this.getBookings(page);
   }
 
-  pagePreviousDisabled() {
-    return {
-      'disabled': this.bookings.currentPage - 1 <= 0;
-    };
+  previousPage(page: number) {
+    this.getBookings(page);
   }
 
-  pageNextDisabled() {
-    return {
-      'disabled': this.bookings.currentPage + 1 > this.bookings.pageCount
-    };
-  }
-
-  page(pageNumber: number) {
-    this.getBookings(pageNumber);
-  }
-
-  previousPage() {
-    if (this.bookings.currentPage - 1 > 0) {
-      this.getBookings(this.bookings.currentPage - 1);
-    }
-  }
-
-  nextPage() {
-    if (this.bookings.currentPage + 1 <= this.bookings.pageCount) {
-      this.getBookings(this.bookings.currentPage + 1);
-    }
+  nextPage(page: number) {
+    this.getBookings(page);
   }
 
   getBookings(page: number, size: number = 10) {

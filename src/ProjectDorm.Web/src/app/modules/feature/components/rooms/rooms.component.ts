@@ -11,7 +11,6 @@ import { ApiService } from 'src/app/services';
 export class RoomsComponent implements OnInit {
 
   rooms: Paged<Room>;
-  pages: Array<number>;
 
   constructor(private apiService: ApiService) {
     this.rooms = new Paged<Room>();
@@ -21,42 +20,19 @@ export class RoomsComponent implements OnInit {
     this.apiService.getRooms(1, 10)
       .subscribe(response => {
         this.rooms = response;
-        this.pages = Array.from({length: this.rooms.pageCount}, (v, k) => k + 1);
       });
   }
 
-  pageActive(index: number) {
-    return {
-      'active': index === this.rooms.currentPage
-    };
+  page(page: number) {
+    this.getRooms(page);
   }
 
-  pagePreviousDisabled() {
-    return {
-      'disabled': this.rooms.currentPage - 1 <= 0;
-    };
+  previousPage(page: number) {
+    this.getRooms(page);
   }
 
-  pageNextDisabled() {
-    return {
-      'disabled': this.rooms.currentPage + 1 > this.rooms.pageCount
-    };
-  }
-
-  page(pageNumber: number) {
-    this.getRooms(pageNumber);
-  }
-
-  previousPage() {
-    if (this.rooms.currentPage - 1 > 0) {
-      this.getRooms(this.rooms.currentPage - 1);
-    }
-  }
-
-  nextPage() {
-    if (this.rooms.currentPage + 1 <= this.rooms.pageCount) {
-      this.getRooms(this.rooms.currentPage + 1);
-    }
+  nextPage(page: number) {
+    this.getRooms(page);
   }
 
   getRooms(page: number, size: number = 10) {

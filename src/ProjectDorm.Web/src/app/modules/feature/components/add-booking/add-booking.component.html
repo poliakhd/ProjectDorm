@@ -1,0 +1,54 @@
+<div class="container" style="margin-top: 5em">
+  <div class="row">
+    <div class="col-12">
+      <div class="alert alert-danger"  *ngIf="formErrors['']">
+        <span *ngFor="let error of formErrors['']" class="text-danger">{{error}}</span>
+      </div>
+     
+      <form [formGroup]="bookingForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="startDate">Start date</label>
+            <input type="date" formControlName="startDate" class="form-control" />
+            <span *ngIf="formErrors.StartDate" class="text-danger">
+                {{formErrors.StartDate}}
+            </span>  
+        </div>
+        <div class="form-group">
+            <label for="endDate">End date</label>
+            <input type="date" formControlName="endDate" class="form-control" />
+            <span *ngIf="formErrors.EndDate" class="text-danger">
+                {{formErrors.EndDate}}
+            </span>  
+        </div>
+        <span class="btn btn-primary" (click)="this.findRooms()">Find rooms</span>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Room</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let room of rooms.result">
+              <td>{{room.id}}</td>
+              <td>
+                <span class="btn btn-primary" *ngIf='this.roomId != room.id' (click)="selectRoom(room.id)">Select</span>
+                <span class="btn btn-success" *ngIf='this.roomId === room.id'>Selected</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <app-paging 
+          [pageCount]="this.rooms.pageCount"
+          [currentPage]="this.rooms.currentPage" 
+          (previous)="this.page($event)"
+          (next)="this.nextPage($event)"
+          (page)="this.page($event)">
+        </app-paging>
+        <div class="form-group">
+            <button class="btn btn-primary">Book</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

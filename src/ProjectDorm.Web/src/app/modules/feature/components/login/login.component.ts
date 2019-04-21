@@ -26,12 +26,16 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  controls() {
+    return this.loginForm.controls;
+  }
+
   onSubmit() {
     if (this.loginForm.invalid) {
         return;
     }
 
-    this.authService.login(this.loginForm.controls.username.value, this.loginForm.controls.password.value)
+    this.authService.login(this.controls().username.value, this.controls().password.value)
         .pipe(first())
         .subscribe(
             data => {

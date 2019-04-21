@@ -39,12 +39,16 @@ export class BookRoomComponent implements OnInit {
     this.formErrors = [];
   }
 
+  controls() {
+    return this.bookForm.controls;
+  }
+
   onSubmit() {
     if (this.bookForm.invalid) {
       return;
     }
 
-    this.apiService.bookRoom(this.roomId, this.bookForm.controls.startDate.value, this.bookForm.controls.endDate.value)
+    this.apiService.bookRoom(this.roomId, this.controls().startDate.value, this.controls().endDate.value)
       .pipe()
       .subscribe(response => {
         this.router.navigate(['/bookings']);

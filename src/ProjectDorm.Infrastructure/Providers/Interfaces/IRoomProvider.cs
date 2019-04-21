@@ -10,6 +10,7 @@
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 // </summary>
 
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ProjectDorm.Common.Models.Paging;
@@ -26,14 +27,24 @@ namespace ProjectDorm.Infrastructure.Providers.Interfaces
         /// <summary>
         /// Asynchronous method for getting all rooms
         /// </summary>
+        /// <param name="paging">Paging model</param>
         /// <returns>List of room entities</returns>
-        Task<PagedResult<RoomEntity>> GetRoomsAsync(int page, int size);
+        Task<PagedResult<RoomEntity>> GetRoomsAsync(PagingModel paging);
 
         /// <summary>
-        /// Asynchronous method for getting available dates from specified room
+        /// Asynchronous method for getting available dates for specified room
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">Room id</param>
+        /// <returns>List of available date ranges</returns>
         Task<IEnumerable<DateRangeModel>> GetAvailableRoomDates(int id);
+
+        /// <summary>
+        /// Asynchronous method for getting available rooms for specified dates
+        /// </summary>
+        /// <param name="startDate">Start date</param>
+        /// <param name="endDate">End date</param>
+        /// <param name="paging">Paging model</param>
+        /// <returns>List of available rooms</returns>
+        Task<PagedResult<RoomEntity>> GetAvailableRooms(DateTime startDate, DateTime endDate, PagingModel paging);
     }
 }
