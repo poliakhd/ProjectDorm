@@ -91,7 +91,7 @@ namespace ProjectDorm.Api.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> AddBooking([FromQuery]AddBookingFilter filter)
+        public async Task<IActionResult> AddBooking([FromBody]AddBookingFilter filter)
         {
             var result = await _bookingProvider.AddBookingAsync(filter.RoomId, filter.StartDate, filter.EndDate);
             return Ok(_mapper.Map<BookingDto>(result));

@@ -10,9 +10,11 @@
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 // </summary>
 
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using ProjectDorm.Common.Models.Paging;
 using ProjectDorm.Domain.Database.Entities;
+using ProjectDorm.Domain.Models;
 
 namespace ProjectDorm.Infrastructure.Providers.Interfaces
 {
@@ -26,5 +28,12 @@ namespace ProjectDorm.Infrastructure.Providers.Interfaces
         /// </summary>
         /// <returns>List of room entities</returns>
         Task<PagedResult<RoomEntity>> GetRoomsAsync(int page, int size);
+
+        /// <summary>
+        /// Asynchronous method for getting available dates from specified room
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task<IEnumerable<DateRangeModel>> GetAvailableRoomDates(int id);
     }
 }

@@ -1,8 +1,8 @@
-﻿// <copyright file="TokenUserModel.cs" company="">
+﻿// <copyright file="DateRangeDto.cs" company="">
 // Copyright (c) 2019 All Rights Reserved
 // </copyright>
 // <author>Daniil Poliakh</author>
-// <date>20/04/2019 6:54 PM</date>
+// <date>21/04/2019 4:05 PM</date>
 // <summary>
 // 
 // THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, 
@@ -10,21 +10,23 @@
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 // </summary>
 
-namespace ProjectDorm.Domain.Models
+using System;
+
+namespace ProjectDorm.Domain.Dto
 {
     /// <summary>
-    /// Token user model
+    /// Date range data transfer object
     /// </summary>
-    public class TokenUserModel
+    public class DateRangeDto
     {
         /// <summary>
-        /// Gets or sets username
+        /// Gets or sets date from
         /// </summary>
-        public string UserName { get; set; }
+        public DateTime? From { get; set; }
 
         /// <summary>
-        /// Gets or sets token
+        /// Gets or sets date to
         /// </summary>
-        public string Token { get; set; }
+        public DateTime? To { get; set; }
     }
 }

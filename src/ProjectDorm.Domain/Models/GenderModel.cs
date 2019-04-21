@@ -12,6 +12,9 @@
 
 namespace ProjectDorm.Domain.Models
 {
+    /// <summary>
+    /// Gender model
+    /// </summary>
     public enum GenderModel
     {
         Male = 0,

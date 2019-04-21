@@ -1,8 +1,8 @@
-﻿// <copyright file="TokenUserModel.cs" company="">
+﻿// <copyright file="DateRangeModel.cs" company="">
 // Copyright (c) 2019 All Rights Reserved
 // </copyright>
 // <author>Daniil Poliakh</author>
-// <date>20/04/2019 6:54 PM</date>
+// <date>21/04/2019 3:32 PM</date>
 // <summary>
 // 
 // THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, 
@@ -10,21 +10,23 @@
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 // </summary>
 
+using System;
+
 namespace ProjectDorm.Domain.Models
 {
     /// <summary>
-    /// Token user model
+    /// Date range model
     /// </summary>
-    public class TokenUserModel
+    public class DateRangeModel
     {
         /// <summary>
-        /// Gets or sets username
+        /// Gets or sets from date
         /// </summary>
-        public string UserName { get; set; }
+        public DateTime? From { get; set; }
 
         /// <summary>
-        /// Gets or sets token
+        /// Gets or sets to date
         /// </summary>
-        public string Token { get; set; }
+        public DateTime? To { get; set; }
     }
 }

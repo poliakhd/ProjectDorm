@@ -11,7 +11,6 @@
 // </summary>
 
 using FluentValidation;
-using ProjectDorm.Api.Filters;
 using ProjectDorm.Api.Filters.Base;
 
 namespace ProjectDorm.Api.Validation

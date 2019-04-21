@@ -12,7 +12,6 @@
 
 using System;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Mvc;
 
 namespace ProjectDorm.Api.Filters
 {
@@ -25,21 +24,18 @@ namespace ProjectDorm.Api.Filters
         /// Gets or sets room id
         /// </summary>
         [Required]
-        [FromQuery]
         public int RoomId { get; set; }
 
         /// <summary>
         /// Gets or sets start booking date
         /// </summary>
         [Required]
-        [FromQuery]
         public DateTime StartDate { get; set; }
 
         /// <summary>
         /// Gets or sets end booking date
         /// </summary>
         [Required]
-        [FromQuery]
         public DateTime EndDate { get; set; }
     }
 }

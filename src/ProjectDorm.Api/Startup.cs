@@ -177,10 +177,10 @@ namespace ProjectDorm.Api
             if (true)
             {
                 var dbContext = container.Resolve<DbContext>();
-                var userManager = container.Resolve<UserManager<AppUserEntity>>();
-
+                
                 if (dbContext.Database.EnsureCreated())
                 {
+                    var userManager = container.Resolve<UserManager<AppUserEntity>>();
                     var user = userManager.CreateAsync(new AppUserEntity() {UserName = "test"}, "test").Result;
                 }
             }

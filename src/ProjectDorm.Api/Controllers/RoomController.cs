@@ -56,10 +56,12 @@ namespace ProjectDorm.Api.Controllers
         /// <returns>List of rooms</returns>
         /// <response code="200">Returns list of rooms</response>
         /// <response code="204">Returns if there are no rooms</response>
+        /// <response code="400">Returns if there are validation errors</response>
         /// <response code="500">Returns if there is system error</response>
         [HttpGet("all")]
         [ProducesResponseType(200)]
         [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> GetAllRooms([FromQuery]PagingFilter filter)
         {
@@ -71,6 +73,30 @@ namespace ProjectDorm.Api.Controllers
             }
 
             return Ok(_mapper.Map<PagedResult<RoomDto>>(result));
+        }
+
+        /// <summary>
+        /// Method for getting all available dates from room
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     GET api/v1/room/{id}/available
+        ///
+        /// </remarks>
+        /// <param name="filter">Filter model</param>
+        /// <returns>List of available dates for room</returns>
+        /// <response code="200">Returns list of available dates for room</response>
+        /// <response code="400">Returns if there are validation errors</response>
+        /// <response code="500">Returns if there is system error</response>
+        [HttpGet("{id}/available")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> GetAvailableRoomDates([FromQuery]GetAvailableRoomDatesFilter filter)
+        {
+            var result = await _roomProvider.GetAvailableRoomDates(filter.Id);
+            return Ok(result);
         }
     }
 }

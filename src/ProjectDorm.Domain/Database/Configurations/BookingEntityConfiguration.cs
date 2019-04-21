@@ -16,6 +16,9 @@ using ProjectDorm.Domain.Database.Entities;
 
 namespace ProjectDorm.Domain.Database.Configurations
 {
+    /// <summary>
+    /// <see cref="BookingEntity"/> ef core configuration
+    /// </summary>
     public class BookingEntityConfiguration : IEntityTypeConfiguration<BookingEntity>
     {
         /// <inheritdoc />

@@ -1,8 +1,8 @@
-﻿// <copyright file="TokenUserModel.cs" company="">
+﻿// <copyright file="GetAvailableRoomDates.cs" company="">
 // Copyright (c) 2019 All Rights Reserved
 // </copyright>
 // <author>Daniil Poliakh</author>
-// <date>20/04/2019 6:54 PM</date>
+// <date>21/04/2019 3:27 PM</date>
 // <summary>
 // 
 // THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, 
@@ -10,21 +10,21 @@
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 // </summary>
 
-namespace ProjectDorm.Domain.Models
+using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc;
+
+namespace ProjectDorm.Api.Filters
 {
     /// <summary>
-    /// Token user model
+    /// Get available room dates filter
     /// </summary>
-    public class TokenUserModel
+    public class GetAvailableRoomDatesFilter
     {
         /// <summary>
-        /// Gets or sets username
+        /// Gets or sets room id
         /// </summary>
-        public string UserName { get; set; }
-
-        /// <summary>
-        /// Gets or sets token
-        /// </summary>
-        public string Token { get; set; }
+        [FromRoute(Name = "id")]
+        [Required]
+        public int Id { get; set; }
     }
 }

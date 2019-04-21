@@ -17,7 +17,14 @@ namespace ProjectDorm.Domain.Dto
     /// </summary>
     public class RoomDto
     {
+        /// <summary>
+        /// Gets or sets room id
+        /// </summary>
         public int Id { get; set; }
+
+        /// <summary>
+        /// Gets or sets room size
+        /// </summary>
         public int Size { get; set; }
     }
 }

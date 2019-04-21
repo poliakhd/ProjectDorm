@@ -11,7 +11,6 @@
 // </summary>
 
 using System.Threading.Tasks;
-using ProjectDorm.Domain.Dto;
 using ProjectDorm.Domain.Models;
 
 namespace ProjectDorm.Infrastructure.Services.Interfaces

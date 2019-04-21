@@ -29,7 +29,7 @@ namespace ProjectDorm.Domain.Map.Profiles
         {
             CreateMap<BookingEntity, BookingDto>()
                 .ForMember(x => x.RoomId, y => y.MapFrom(z => z.RoomId))
-                .ForMember(x => x.StartDate, y => y.MapFrom(z => z.EndDate))
+                .ForMember(x => x.StartDate, y => y.MapFrom(z => z.StartDate))
                 .ForMember(x => x.EndDate, y => y.MapFrom(z => z.EndDate));
 
             CreateMap<PagedResult<BookingEntity>, PagedResult<BookingDto>>()

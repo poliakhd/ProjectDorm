@@ -14,6 +14,7 @@ using AutoMapper;
 using ProjectDorm.Common.Models.Paging;
 using ProjectDorm.Domain.Database.Entities;
 using ProjectDorm.Domain.Dto;
+using ProjectDorm.Domain.Models;
 
 namespace ProjectDorm.Domain.Map.Profiles
 {
@@ -33,6 +34,8 @@ namespace ProjectDorm.Domain.Map.Profiles
 
             CreateMap<PagedResult<RoomEntity>, PagedResult<RoomDto>>()
                 .ForMember(x => x.Result, y => y.MapFrom(z => z.Result));
+
+            CreateMap<DateRangeModel, DateRangeDto>();
         }
     }
 }

@@ -28,6 +28,15 @@ namespace ProjectDorm.Api.Validation
         /// </summary>
         public AddBookingFilterValidator(ILinqProvider linqProvider)
         {
+            RuleFor(x => x.StartDate)
+                .LessThanOrEqualTo(x => x.EndDate)
+                .WithMessage("'startdDate' cannot be greater that 'endDate'");
+
+
+            RuleFor(x => x.EndDate)
+                .GreaterThanOrEqualTo(x => x.StartDate)
+                .WithMessage("'endDate' cannot be less that 'startDate'");
+
             RuleFor(x => x)
                 .Must(y =>
                 {
@@ -38,7 +47,7 @@ namespace ProjectDorm.Api.Validation
 
                     foreach (var booking in bookingsDates)
                     {
-                        if(y.StartDate < booking.EndDate && y.EndDate > booking.StartDate) {
+                        if(y.StartDate < booking.EndDate.AddDays(1) && y.EndDate > booking.StartDate) {
                             return false;
                         }
                     }

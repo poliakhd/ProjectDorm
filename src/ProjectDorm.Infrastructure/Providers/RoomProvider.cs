@@ -10,11 +10,16 @@
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 // </summary>
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using ProjectDorm.Common.Extensions;
 using ProjectDorm.Common.Models.Paging;
 using ProjectDorm.Domain.Database.Entities;
 using ProjectDorm.Domain.Database.Providers.Interfaces;
+using ProjectDorm.Domain.Models;
 using ProjectDorm.Infrastructure.Providers.Interfaces;
 
 namespace ProjectDorm.Infrastructure.Providers
@@ -41,6 +46,48 @@ namespace ProjectDorm.Infrastructure.Providers
                 .AsPagedAsync(page, size);
 
             return rooms;
+        }
+
+        /// <inheritdoc />
+        public async Task<IEnumerable<DateRangeModel>> GetAvailableRoomDates(int id)
+        {
+            var room = await _linqProvider.Query<RoomEntity>()
+                .Where(x => x.Id == id)
+                .Include(x => x.Bookings)
+                .FirstOrDefaultAsync();
+
+            var orderedRoomBookings = room.Bookings
+                .OrderBy(x => x.StartDate)
+                .Where(x => x.StartDate > DateTime.Now && x.EndDate > DateTime.Now)
+                .ToList();
+
+            if (!orderedRoomBookings.Any())
+            {
+                return new[] {new DateRangeModel {From = DateTime.Now.Date}};
+            }
+
+            var result = new List<DateRangeModel>();
+
+            for (int i = 0; i < orderedRoomBookings.Count; i++)
+            {
+                if (i + 1 <= orderedRoomBookings.Count - 1 && orderedRoomBookings[i].EndDate.AddDays(1) < orderedRoomBookings[i + 1].StartDate)
+                {
+                    result.Add(new DateRangeModel()
+                    {
+                        From = orderedRoomBookings[i].EndDate.AddDays(1),
+                        To = orderedRoomBookings[i + 1].StartDate.AddDays(-1)
+                    });
+                }
+                else if(i == orderedRoomBookings.Count - 1)
+                {
+                    result.Add(new DateRangeModel()
+                    {
+                        From = orderedRoomBookings[i].EndDate.AddDays(1)
+                    });
+                }
+            }
+
+            return result;
         }
     }
 }
