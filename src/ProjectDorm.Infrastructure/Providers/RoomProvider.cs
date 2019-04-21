@@ -63,7 +63,7 @@ namespace ProjectDorm.Infrastructure.Providers
 
             if (!orderedRoomBookings.Any())
             {
-                return new[] {new DateRangeModel {From = DateTime.Now.Date}};
+                return new[] {new DateRangeModel {From = DateTime.Now.Date.AddDays(1)}};
             }
 
             var result = new List<DateRangeModel>();

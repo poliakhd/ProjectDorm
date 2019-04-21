@@ -174,17 +174,6 @@ namespace ProjectDorm.Api
 
             var container = builder.Build();
 
-            if (true)
-            {
-                var dbContext = container.Resolve<DbContext>();
-                
-                if (dbContext.Database.EnsureCreated())
-                {
-                    var userManager = container.Resolve<UserManager<AppUserEntity>>();
-                    var user = userManager.CreateAsync(new AppUserEntity() {UserName = "test"}, "test").Result;
-                }
-            }
-
             return new AutofacServiceProvider(container);
         }
 

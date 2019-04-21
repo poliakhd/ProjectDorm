@@ -22,9 +22,7 @@ export class PagingComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    console.log('entered');
-    console.log(this.pageCount);
-    this.pages = Array.from({length: this.pageCount}, (v, k) => k + 1);
+    this.updatePages();
   }
 
   previousPage() {
@@ -59,5 +57,21 @@ export class PagingComponent implements OnInit, OnChanges {
     return {
       'disabled': this.currentPage + 1 > this.pageCount
     };
+  }
+
+  updatePages() {
+    const pages = new Array<number>();
+    const limit = this.currentPage + 10 <= this.pageCount ? this.currentPage + 10 : this.pageCount;
+    const current = this.currentPage - 5 >= 0 ? 5 : this.currentPage;
+
+    for (let i = this.currentPage - current + 1; i < this.currentPage; i++) {
+      pages.push(i);
+    }
+
+    for (let i = this.currentPage; i <= limit - current; i++) {
+      pages.push(i);
+    }
+
+    this.pages = pages;
   }
 }
