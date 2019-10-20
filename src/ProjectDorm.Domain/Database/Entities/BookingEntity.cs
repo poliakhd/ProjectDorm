@@ -52,6 +52,6 @@ namespace ProjectDorm.Domain.Database.Entities
         /// <summary>
         /// Gets or sets booking gender
         /// </summary>
-        public Gender Gender { get; set; }
+        public GenderModel GenderModel { get; set; }
     }
 }

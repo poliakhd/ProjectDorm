@@ -14,6 +14,9 @@ using System;
 
 namespace ProjectDorm.Domain.Dto
 {
+    /// <summary>
+    /// Booking data transfer object
+    /// </summary>
     public class BookingDto
     {
         /// <summary>

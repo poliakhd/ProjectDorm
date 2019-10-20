@@ -12,6 +12,9 @@
 
 namespace ProjectDorm.Domain.Options
 {
+    /// <summary>
+    /// Jwt options
+    /// </summary>
     public class JwtOptions
     {
         /// <summary>

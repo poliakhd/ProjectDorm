@@ -1,8 +1,8 @@
-﻿// <copyright file="LoggedUserDto.cs" company="">
+﻿// <copyright file="LoginDto.cs" company="">
 // Copyright (c) 2019 All Rights Reserved
 // </copyright>
 // <author>Daniil Poliakh</author>
-// <date>19/04/2019 11:33 PM</date>
+// <date>19/04/2019 11:47 PM</date>
 // <summary>
 // 
 // THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, 
@@ -10,18 +10,28 @@
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 // </summary>
 
-namespace ProjectDorm.Domain.Dto
+using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc;
+
+namespace ProjectDorm.Api.Filters
 {
-    public class LoggedUserDto
+    /// <summary>
+    /// Authenticate filter
+    /// </summary>
+    public class AuthenticateFilter
     {
         /// <summary>
         /// Gets or sets username
         /// </summary>
+        [Required]
+        [FromQuery]
         public string UserName { get; set; }
 
         /// <summary>
-        /// Gets or sets token
+        /// Gets or sets password
         /// </summary>
-        public string Token { get; set; }
+        [Required]
+        [FromQuery]
+        public string Password { get; set; }
     }
 }

@@ -11,8 +11,10 @@
 // </summary>
 
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ProjectDorm.Api.Filters;
 using ProjectDorm.Domain.Dto;
 using ProjectDorm.Infrastructure.Services.Interfaces;
 
@@ -23,17 +25,19 @@ namespace ProjectDorm.Api.Controllers
     /// </summary>
     [Authorize]
     [ApiController]
-    [Route("api/v1/[controller]")]
+    [Route("api/v1/user")]
     public class UserController : Controller
     {
         private readonly IUserService _userService;
+        private readonly IMapper _mapper;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UserController" /> class.
         /// </summary>
-        public UserController(IUserService userService)
+        public UserController(IUserService userService, IMapper mapper)
         {
             _userService = userService;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -42,7 +46,7 @@ namespace ProjectDorm.Api.Controllers
         /// <remarks>
         /// Sample request:
         ///
-        ///     GET /user/authenticate
+        ///     GET api/v1/user/authenticate
         ///
         /// </remarks>
         /// <returns>List of bookings</returns>
@@ -50,15 +54,15 @@ namespace ProjectDorm.Api.Controllers
         /// <response code="400">Returns if has validation errors</response>
         /// <response code="404">Returns if user to authenticate not found</response>
         /// <response code="500">Returns if there is system error</response>
-        /// <param name="model"><see cref="LoginDto"/> model</param>
-        /// <returns><see cref="LoggedUserDto"/> model</returns>
+        /// <param name="model"><see cref="AuthenticateFilter"/> model</param>
+        /// <returns><see cref="TokenUserDto"/> model</returns>
         [HttpPost("authenticate")]
         [AllowAnonymous]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> Authenticate([FromBody]LoginDto model)
+        public async Task<IActionResult> Authenticate([FromBody]AuthenticateFilter model)
         {
             var result = await _userService.AuthenticateAsync(model.UserName, model.Password);
 
@@ -67,28 +71,7 @@ namespace ProjectDorm.Api.Controllers
                 return NotFound();
             }
 
-            return Ok(result);
-        }
-
-        /// <summary>
-        /// Method for testing token access
-        /// </summary>
-        /// <remarks>
-        /// Sample request:
-        ///
-        ///     GET /user/test
-        ///
-        /// </remarks>
-        /// <returns>List of bookings</returns>
-        /// <response code="200">Returns if authorized</response>
-        /// <response code="500">Returns if there is system error</response>
-        /// <returns></returns>
-        [HttpGet("test")]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(500)]
-        public IActionResult TestAuthentication()
-        {
-            return Ok();
+            return Ok(_mapper.Map<TokenUserDto>(result));
         }
     }
 }

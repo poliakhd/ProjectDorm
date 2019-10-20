@@ -1,0 +1,25 @@
+<a class="btn btn-primary mb-2" [routerLink]="['/booking/add']">New booking</a>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Room</th>
+      <th scope="col">Start date</th>
+      <th scope="col">End date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let booking of bookings.result">
+      <td>{{booking.roomId}}</td>
+      <td>{{booking.startDate}}</td>
+      <td>{{booking.endDate}}</td>
+    </tr>
+  </tbody>
+</table>
+<app-paging 
+  [pageCount]="this.bookings.pageCount"
+  [currentPage]="this.bookings.currentPage" 
+  (previous)="this.page($event)"
+  (next)="this.nextPage($event)"
+  (page)="this.page($event)">
+</app-paging>

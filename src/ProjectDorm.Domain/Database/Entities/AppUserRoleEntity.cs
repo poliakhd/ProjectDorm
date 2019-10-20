@@ -14,6 +14,9 @@ using Microsoft.AspNetCore.Identity;
 
 namespace ProjectDorm.Domain.Database.Entities
 {
+    /// <summary>
+    /// Dorm app user role
+    /// </summary>
     public class AppUserRoleEntity : IdentityRole<int>
     {
         

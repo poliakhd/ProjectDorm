@@ -16,6 +16,9 @@ using ProjectDorm.Domain.Database.Entities;
 
 namespace ProjectDorm.Domain.Database.Configurations
 {
+    /// <summary>
+    /// <see cref="BookingEntity"/> ef core configuration
+    /// </summary>
     public class BookingEntityConfiguration : IEntityTypeConfiguration<BookingEntity>
     {
         /// <inheritdoc />
@@ -27,6 +30,9 @@ namespace ProjectDorm.Domain.Database.Configurations
 
             builder.HasOne(x => x.Room)
                 .WithMany(x => x.Bookings);
+
+            builder.Property(x => x.GenderModel)
+                .HasColumnName("Gender");
         }
     }
 }
